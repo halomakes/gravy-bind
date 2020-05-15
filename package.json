@@ -1,8 +1,9 @@
 {
   "name": "gravy-bind",
   "version": "1.0.0",
-  "description": "gravy-bind",
-  "main": "index.js",
+  "description": "Hassle-free one-way binding for legacy and predominantly server-side apps",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc && tsc -p tsconfig.browser.json",
@@ -12,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/halomademeapc/gravy-bind.git"
   },
-  "keywords": [],
+  "keywords": ["binding"],
   "author": "halomademeapc",
   "license": "ISC",
   "devDependencies": {
