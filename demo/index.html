@@ -59,6 +59,10 @@
             <h2>Getting Started</h2>
             <p>Add a reference to the script</p>
             <pre><code class="language-html">&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/gravy-bind/dist.browser/index.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <p>Create a binder</p>
+            <pre><code class="language-js">let binder = new GravyBinder();</code></pre>
+            <p>Or make one scoped to just part of the page</p>
+            <pre><code class="language-js">let binder = new GravyBinder(document.getElementById('myScope'));</code></pre>
         </div>
         <hr>
         <div>

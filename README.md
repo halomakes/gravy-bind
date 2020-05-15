@@ -8,6 +8,14 @@ Add a reference to the script
 ```html
 <script type="text/javascript" src="https://unpkg.com/gravy-bind/dist.browser/index.js"></script>
 ```
+Create a binder
+```javascript
+let binder = new GravyBinder();
+```
+Or make one scoped to just part of the page
+```javascript
+let binder = new GravyBinder(document.getElementById('myScope'));
+```
 
 ## What is it?
 Say hello to GravyBind! This utility lets you bind things in your HTML to JavaScript variables.
