@@ -1,0 +1,3 @@
+class GravyBinder {
+    public dummy = '';
+}

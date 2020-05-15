@@ -5,12 +5,23 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc && tsc -p tsconfig.browser.json",
+    "lint": "tslint -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/halomademeapc/gravy-bind.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "halomademeapc",
   "license": "ISC",
   "devDependencies": {
+    "tslint": "^6.1.2",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.9.2"
-  }
+  },
+  "files": [
+    "dist/**/*",
+    "dist.browser/**/*"
+  ]
 }
