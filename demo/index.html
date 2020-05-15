@@ -14,81 +14,250 @@
         <h1>GravyBind</h1>
         <small>Hassle-free one-way binding for predominantly server-side apps</small>
         <hr>
-        <h2>What is it?</h2>
-        <p>
-            Say hello to GravyBind! This utility lets you bind things in your HTML to JavaScript variables.
-            <br><br>
-            Let me start off by saying that this is not a good alternative to anything more
-            fully-featured like Vue or React. This is meant for simple scenarios where you want to just add some
-            dynamism to an application that's either simpler or older without making major changes or making a big mess.
-            <br><br>
-            In the case I originally created this for, we had a .NET Core MVC project with jQuery spaghetti that was
-            quickly becoming a nightmare to maintain as the app's complexity increased. I needed a simple way to update
-            things like display values, class bindings, and native HTML validation properties in a more declarative way
-            than a bunch of random query selectors. GravyBind uses data attributes to handle binding, so your markup and
-            bindings are in the same place and it's easy to see how things are connected. There is no change tracker, it
-            literally refreshes all the bindings when you tell it to so this probably isn't the most optimized thing
-            around. Feel free to open a pull request if you have some performance improvements in mind.
-            <br><br>
-            Again, if you're building a new app, I strongly recommend using a popular frontend framework or library.
-            However when limitations prevent that, this can come in handy.
-            <br><br>
-            With that out of the way, let's take a look at what this can do!
-        </p>
-        <hr>
-        <h2>Usage</h2>
         <div>
-            <h5>Demo Class</h5>
+            <h2>What is it?</h2>
             <p>
-                This is an example of the JavaScript class that things in this demo are bound to. You can use any global
-                variable you like.
+                Say hello to GravyBind! This utility lets you bind things in your HTML to JavaScript variables.
+                <br><br>
+                Let me start off by saying that this is not a good alternative to anything more fully-featured like Vue
+                or React. This is meant for simple scenarios where you want to just add some dynamism to an application
+                that's either simpler or older without making major changes or making a big mess.
+                <br><br>
+                In the case I originally created this for, we had a .NET Core MVC project with jQuery spaghetti that was
+                quickly becoming a nightmare to maintain as the app's complexity increased. I needed a simple way to
+                update things like display values, class bindings, and native HTML validation properties in a more
+                declarative way than a bunch of random query selectors. GravyBind uses data attributes to handle
+                binding, so your markup and bindings are in the same place and it's easy to see how things are
+                connected. There is no change tracker, it literally refreshes all the bindings when you tell it to so
+                this probably isn't the most optimized thing around. Feel free to open a pull request if you have some
+                performance improvements in mind.
+                <br><br>
+                Again, if you're building a new app, I strongly recommend using a popular frontend framework or library.
+                However when limitations prevent that, this can come in handy.
+                <br><br>
+                With that out of the way, let's take a look at what this can do!
             </p>
         </div>
-        <h3>Inputs</h3>
+        <hr>
         <div>
-            <h5>Text</h5>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <input data-in="dm.textInput" type="text" class="form-control" id="textInput" value="demo">
+            <h2>Usage</h2>
+            <div>
+                <h5>Demo Class</h5>
+                <p>
+                    This is an example of the JavaScript that things in this demo are bound to. It's a class but you can
+                    use any global variable you like.
+                </p>
+                <pre><code data-display="dm.codeSource" class="language-js"></code></pre>
+            </div>
+            <div>
+                <h3>Display</h3>
+                <div>
+                    <h5>Add/remove a class</h5>
+                    <p>Use a display: none class to hide stuff</p>
+                    <div class="row my-2">
+                        <div class="col">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="toggleColor"
+                                    data-in="dm.toggleColor">
+                                <label class="custom-control-label" for="toggleColor">Toggle color</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div data-class="bg-success" data-class-condition="dm.toggleColor">Change the color</div>
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <b>Your input:</b>
-                    <span data-display="dm.textInput"></span>
+                    <pre><code class="language-html">&lt;input type=&quot;checkbox&quot; data-in=&quot;dm.toggleColor&quot;&gt;
+&lt;div data-class=&quot;bg-success&quot; data-class-condition=&quot;dm.toggleColor&quot;&gt;
+    Change the color
+&lt;/div&gt;</code></pre>
                 </div>
             </div>
-            <pre><code>&lt;input data-in=&quot;dm.textInput&quot; type=&quot;text&quot;&gt;
-&lt;span data-display=&quot;dm.textInput&quot;&gt;</code></pre>
-        </div>
-        <div>
-            <h5>Checkbox</h5>
-            <div class="row">
-                <div class="col">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="checkInput"
-                            data-in="dm.checkInput">
-                        <label class="custom-control-label" for="checkInput">This is a checkbox</label>
+            <div>
+                <h3>Forms</h3>
+                <div>
+                    <h5>General Input</h5>
+                    <div class="row my-2">
+                        <div class="col">
+                            <div class="form-group">
+                                <input data-in="dm.textInput" type="text" class="form-control" id="textInput"
+                                    value="demo">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <b>Your input:</b>
+                                <span data-display="dm.textInput"></span>
+                            </div>
+                            <div>
+                                <b>You can bind outputs to functions:</b>
+                                <span data-display="dm.getStupidText(dm.textInput)"></span>
+                            </div>
+                        </div>
                     </div>
+                    <pre><code class="language-html">&lt;input data-in=&quot;dm.textInput&quot; type=&quot;text&quot;&gt;
+&lt;span data-display=&quot;dm.textInput&quot;&gt;
+&lt;span data-display=&quot;dm.getStupidText(dm.textInput)&quot;&gt;&lt;/span&gt;</code></pre>
                 </div>
-                <div class="col">
-                    <div>
-                        <b>Checkbox value is:</b>
-                        <span data-display="dm.checkInput"></span>
+                <div>
+                    <h5>Checkbox</h5>
+                    <div class="row my-2">
+                        <div class="col">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="checkInput"
+                                    data-in="dm.checkInput">
+                                <label class="custom-control-label" for="checkInput">This is a checkbox</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <b>Checkbox value is:</b>
+                                <span data-display="dm.checkInput"></span>
+                            </div>
+                            <div>
+                                <b>You can also put js right in the binding:</b>
+                                <span data-display="dm.checkInput ? 'Yes' : 'No'"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <b>You can also put js right in the binding:</b>
-                        <span data-display="dm.checkInput ? 'Yes' : 'No'"></span>
+                    <pre><code class="language-html">&lt;input type=&quot;checkbox&quot; data-in=&quot;dm.checkInput&quot;&gt;
+&lt;span data-display=&quot;dm.checkInput&quot;&gt;&lt;/span&gt;
+&lt;span data-display=&quot;dm.checkInput ? 'Yes' : 'No'&quot;&gt;&lt;/span&gt;</code></pre>
+                </div>
+                <div>
+                    <h5>Outputting to an Input</h5>
+                    <p>Useful for setting hidden inputs to be submitted with a form</p>
+                    <div class="row my-2">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Pick one</label>
+                                <select class="custom-select" data-in="dm.select">
+                                    <option selected disabled value="">Open this select menu</option>
+                                    <option value="Eeny">One</option>
+                                    <option value="Meeny">Two</option>
+                                    <option value="Miny">Three</option>
+                                    <option value="Moe">Four</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="selectOut">You Picked</label>
+                                <input data-out="dm.select" class="form-control" id="selectOut" disabled>
+                            </div>
+                        </div>
                     </div>
+                    <pre><code class="language-html">&lt;select data-in=&quot;dm.select&quot;&gt;
+    &lt;option selected disabled value=&quot;&quot;&gt;Open this select menu&lt;/option&gt;
+    &lt;option value=&quot;Eeny&quot;&gt;One&lt;/option&gt;
+    &lt;option value=&quot;Meeny&quot;&gt;Two&lt;/option&gt;
+    &lt;option value=&quot;Miny&quot;&gt;Three&lt;/option&gt;
+    &lt;option value=&quot;Moe&quot;&gt;Four&lt;/option&gt;
+&lt;/select&gt;
+&lt;input data-out=&quot;dm.select&quot; disabled&gt;</code></pre>
+                </div>
+                <div>
+                    <h5>Min/Max</h5>
+                    <div class="row my-2">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="min">Min</label>
+                                <input data-in="dm.min" type="number" class="form-control" id="min" value="5">
+                            </div>
+                            <div class="form-group">
+                                <label for="min">Max</label>
+                                <input data-in="dm.max" type="number" class="form-control" id="max" value="10">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="range">Range input</label>
+                                <input data-min="dm.min" data-max="dm.max" data-in="dm.range" type="range"
+                                    class="form-control-range" id="range">
+                            </div>
+                            <span data-display="dm.range"></span>
+                            <div class="form-group">
+                                <label for="rangedNum">Numeral Input</label>
+                                <input data-min="dm.min" data-max="dm.max" type="number" class="form-control"
+                                    id="rangedNum">
+                            </div>
+                        </div>
+                    </div>
+                    <pre><code class="language-html">&lt;input data-in=&quot;dm.min&quot; type=&quot;number&quot;&gt;
+&lt;input data-in=&quot;dm.max&quot; type=&quot;number&quot;&gt;
+&lt;input data-min=&quot;dm.min&quot; data-max=&quot;dm.max&quot; data-in=&quot;dm.range&quot; type=&quot;range&quot;&gt;
+&lt;span data-display=&quot;dm.range&quot;&gt;&lt;/span&gt;
+&lt;input data-min=&quot;dm.min&quot; data-max=&quot;dm.max&quot; type=&quot;number&quot;&gt;</code></pre>
+                </div>
+                <div>
+                    <h5>Disable</h5>
+                    <div class="row my-2">
+                        <div class="col">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="disable" data-in="dm.disable">
+                                <label class="custom-control-label" for="disable">Disable button</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <button role="button" class="btn btn-primary" data-disable="dm.disable">Button :)</button>
+                        </div>
+                    </div>
+                    <pre><code class="language-html">&lt;input type=&quot;checkbox&quot; data-in=&quot;dm.disable&quot;&gt;
+&lt;button data-disable=&quot;dm.disable&quot;&gt;Button :)&lt;/button&gt;</code></pre>
+                </div>
+            </div>
+            <div>
+                <h3>Triggering</h3>
+                <div>
+                    <h5>Immediate updates</h5>
+                    <p>
+                        By default, text inputs update on change or blur events. If you aren't worried about the
+                        performance implications and need something faster, you can add a data-immediate attribute to
+                        the element.
+                    </p>
+                    <div class="row my-2">
+                        <div class="col">
+                            <input type="text" data-in="dm.immediate" data-immediate="true" value="gottagofast"
+                                class="form-control">
+                        </div>
+                        <div class="col">
+                            <span data-display="dm.getStupidText(dm.immediate)"></span>
+                        </div>
+                    </div>
+                    <pre><code class="language-html">&lt;input type=&quot;text&quot; data-in=&quot;dm.immediate&quot; data-immediate&quot;true&quot;&gt;
+&lt;span data-display=&quot;dm.getStupidText(dm.immediate)&quot;&gt;&lt;/span&gt;</code></pre>
+                </div>
+                <div>
+                    <h5>Manually refreshing</h5>
+                    <p>
+                        You can manually trigger a display refresh by calling updateOutwardBindings on your binder
+                        instance. This is useful if you changed some values via code or fetched some info in
+                        asynchronously.
+                    </p>
+                    <div class="row my-2">
+                        <div class="col">
+                            <button class="btn btn-primary" onclick="dm.triggerRefresh()">Trigger update</button>
+                        </div>
+                        <div class="col">
+                            <span data-display="dm.counter"></span>
+                        </div>
+                    </div>
+                    <pre><code class="language-html">&lt;button onclick=&quot;dm.triggerRefresh()&quot;&gt;Trigger update&lt;/button&gt;
+&lt;span data-display=&quot;dm.counter&quot;&gt;&lt;/span&gt;</code></pre>
                 </div>
             </div>
         </div>
         <hr>
-        <h2>Planned Features</h2>
-        <ul>
-            <li>Root node scoping</li>
-            <li>Two-way binding on inputs</li>
-        </ul>
+        <div>
+            <h2>Planned Features</h2>
+            <ul>
+                <li>Radio button support</li>
+                <li>Registering custom binding types</li>
+                <li>More validation functions</li>
+                <li>Adding/removing nodes instead of just hiding them</li>
+                <li>Root node scoping</li>
+                <li>Two-way binding on inputs</li>
+            </ul>
+        </div>
     </div>
 
 

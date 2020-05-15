@@ -35,12 +35,10 @@ class GravyBinder {
         this.loopByQuery('[data-in]', (e) => {
             if (e.type === 'checkbox')
                 this.setDynamic(e.dataset.in, e.checked);
-            else {
-                if (e.type === 'number')
-                    this.setDynamic(e.dataset.in, Number(e.value));
-                else
-                    this.setDynamic(e.dataset.in, e.value);
-            }
+            else if (e.type === 'number')
+                this.setDynamic(e.dataset.in, Number(e.value));
+            else
+                this.setDynamic(e.dataset.in, e.value);
         });
 
     public updateShadowInputBindings = (): void =>
@@ -78,6 +76,8 @@ class GravyBinder {
     private bindInputEvents = (): void => this.loopByQuery('[data-in]', (e) => {
         e.addEventListener('change', () => this.updateBindings());
         e.addEventListener('blur', () => this.updateBindings());
+        if (e.dataset.immediate === 'true')
+            e.addEventListener('keyup', () => this.updateBindings());
     });
 
     private initializeListener = (): void => {
