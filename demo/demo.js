@@ -19,7 +19,7 @@ class DemoModel {
 
     loadSource = () => {
         if (window.fetch) {
-            fetch('demo.js').then(r => r.text().then(t => {
+            fetch('https://raw.githubusercontent.com/halomademeapc/gravy-bind/master/demo/demo.js').then(r => r.text().then(t => {
                 this.codeSource = t;
                 this.binder.updateOutwardBindings();
                 hljs.initHighlighting();
