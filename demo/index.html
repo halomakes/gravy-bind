@@ -4,11 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GravyBind Demo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css" async>
 </head>
 
 <body>
+    <div class="container">
+        <h1>GravyBind</h1>
+        <small>Hassle-free one-way binding for predominantly server-side apps</small>
+        <hr>
+        <h2>What is it?</h2>
+        <p>
+            Say hello to GravyBind! This utility lets you bind things in your HTML to JavaScript variables.
+            <br><br>
+            Let me start off by saying that this is not a good alternative to anything more
+            fully-featured like Vue or React. This is meant for simple scenarios where you want to just add some
+            dynamism to an application that's either simpler or older without making major changes or making a big mess.
+            <br><br>
+            In the case I originally created this for, we had a .NET Core MVC project with jQuery spaghetti that was
+            quickly becoming a nightmare to maintain as the app's complexity increased. I needed a simple way to update
+            things like display values, class bindings, and native HTML validation properties in a more declarative way
+            than a bunch of random query selectors. GravyBind uses data attributes to handle binding, so your markup and
+            bindings are in the same place and it's easy to see how things are connected. There is no change tracker, it
+            literally refreshes all the bindings when you tell it to so this probably isn't the most optimized thing
+            around. Feel free to open a pull request if you have some performance improvements in mind.
+            <br><br>
+            Again, if you're building a new app, I strongly recommend using a popular frontend framework or library.
+            However when limitations prevent that, this can come in handy.
+            <br><br>
+            With that out of the way, let's take a look at what this can do!
+        </p>
+        <hr>
+        <h2>Usage</h2>
+        <div>
+            <h5>Demo Class</h5>
+            <p>
+                This is an example of the JavaScript class that things in this demo are bound to. You can use any global
+                variable you like.
+            </p>
+        </div>
+        <h3>Inputs</h3>
+        <div>
+            <h5>Text</h5>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <input data-in="dm.textInput" type="text" class="form-control" id="textInput" value="demo">
+                    </div>
+                </div>
+                <div class="col">
+                    <b>Your input:</b>
+                    <span data-display="dm.textInput"></span>
+                </div>
+            </div>
+            <pre><code>&lt;input data-in=&quot;dm.textInput&quot; type=&quot;text&quot;&gt;
+&lt;span data-display=&quot;dm.textInput&quot;&gt;</code></pre>
+        </div>
+        <div>
+            <h5>Checkbox</h5>
+            <div class="row">
+                <div class="col">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="checkInput"
+                            data-in="dm.checkInput">
+                        <label class="custom-control-label" for="checkInput">This is a checkbox</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <b>Checkbox value is:</b>
+                        <span data-display="dm.checkInput"></span>
+                    </div>
+                    <div>
+                        <b>You can also put js right in the binding:</b>
+                        <span data-display="dm.checkInput ? 'Yes' : 'No'"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h2>Planned Features</h2>
+        <ul>
+            <li>Root node scoping</li>
+            <li>Two-way binding on inputs</li>
+        </ul>
+    </div>
+
 
     <script src="../dist.browser/index.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
     <script src="demo.js" type="text/javascript"></script>
 </body>
 

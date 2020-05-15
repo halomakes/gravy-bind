@@ -1,3 +1,9 @@
-// import { GravyBinder } from '../lib/index.js';
+let gb = new GravyBinder(document);
 
-let gb = new GravyBinder();
+class DemoModel {
+    textInput = '';
+    checkInput = false;
+}
+
+let dm = new DemoModel();
+hljs.initHighlightingOnLoad();

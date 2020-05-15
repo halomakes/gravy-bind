@@ -3,15 +3,16 @@ class GravyBinder {
 
     constructor(root?: HTMLElement) {
         this.root = root || document;
-        this.initializeListener();
+        this.initialize();
     }
 
     private loopByQuery = (query: string, action: (element: any) => any): void => {
         const elements = this.root.querySelectorAll(query);
 
-        for (const element in elements) {
-            if (action)
-                action(element);
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < elements.length; ++i) {
+            const element = elements[i];
+            action(element);
         }
     };
 
@@ -83,4 +84,12 @@ class GravyBinder {
         this.bindInputEvents();
         this.updateBindings();
     };
+
+    private initialize = (): void => {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', this.initializeListener);
+        } else {
+            this.initializeListener();
+        }
+    }
 };
