@@ -22,3 +22,11 @@ With that out of the way, let's take a look at what this can do!
 
 ## Docs & Demo
 See the demo page for usage and examples: [gravybind.halomademeapc.com](https://gravybind.halomademeapc.com/)
+
+## Planned Features
+* Radio button support
+* Registering custom binding types
+* More validation functions
+* Adding/removing nodes instead of just hiding them
+* Root node scoping
+* Two-way binding on inputs
