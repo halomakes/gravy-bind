@@ -1,8 +1,10 @@
 class GravyBinder {
     private root: Element | Document;
+    private scope: any;
 
-    constructor(root?: HTMLElement) {
+    constructor(scope?: any, root?: HTMLElement) {
         this.root = root || document;
+        this.scope = scope || window;
         this.initialize();
     }
 
@@ -16,11 +18,12 @@ class GravyBinder {
         }
     };
 
-    // tslint:disable-next-line: no-eval
-    private setDynamic = (variableName: string, value: any): void => eval(variableName + ' = value');
+    private setDynamic = <TValue>(property: string, value: TValue): void => {
+        this.scope.$binderWorkingValue = value;
+        return Function(`${property} = this.$binderWorkingValue`).call(this.scope);
+    }
 
-    // tslint:disable-next-line: no-eval
-    private getDynamic = (variableName: string): any => eval(variableName);
+    private getDynamic = <TValue>(property: string): TValue => Function(`return ${property}`).call(this.scope);
 
     public updateDisplayBindings = () =>
         this.loopByQuery('[data-display]', (e) => e.innerHTML = this.getDynamic(e.dataset.display));

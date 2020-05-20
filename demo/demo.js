@@ -1,5 +1,5 @@
 class DemoModel {
-    binder = new GravyBinder(document);
+    binder = new GravyBinder(this, document.getElementById('demoRoot'));
     codeSource = '';
     toggleColor = false;
     textInput = '';

@@ -65,7 +65,7 @@
             <pre><code class="language-js">let binder = new GravyBinder(document.getElementById('myScope'));</code></pre>
         </div>
         <hr>
-        <div>
+        <div id="demoScope">
             <h2>Usage</h2>
             <div>
                 <h5>Demo Class</h5>
@@ -73,7 +73,7 @@
                     This is an example of the JavaScript that things in this demo are bound to. It's a class but you can
                     use any global variable you like.
                 </p>
-                <pre><code data-display="dm.codeSource" class="language-js"></code></pre>
+                <pre><code data-display="this.codeSource" class="language-js"></code></pre>
             </div>
             <div>
                 <h3>Display</h3>
@@ -84,16 +84,16 @@
                         <div class="col">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="toggleColor"
-                                    data-in="dm.toggleColor">
+                                    data-in="this.toggleColor">
                                 <label class="custom-control-label" for="toggleColor">Toggle color</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div data-class="bg-success" data-class-condition="dm.toggleColor">Change the color</div>
+                            <div data-class="bg-success" data-class-condition="this.toggleColor">Change the color</div>
                         </div>
                     </div>
-                    <pre><code class="language-html">&lt;input type=&quot;checkbox&quot; data-in=&quot;dm.toggleColor&quot;&gt;
-&lt;div data-class=&quot;bg-success&quot; data-class-condition=&quot;dm.toggleColor&quot;&gt;
+                    <pre><code class="language-html">&lt;input type=&quot;checkbox&quot; data-in=&quot;this.toggleColor&quot;&gt;
+&lt;div data-class=&quot;bg-success&quot; data-class-condition=&quot;this.toggleColor&quot;&gt;
     Change the color
 &lt;/div&gt;</code></pre>
                 </div>
@@ -105,24 +105,24 @@
                     <div class="row my-2">
                         <div class="col">
                             <div class="form-group">
-                                <input data-in="dm.textInput" type="text" class="form-control" id="textInput"
+                                <input data-in="this.textInput" type="text" class="form-control" id="textInput"
                                     value="demo">
                             </div>
                         </div>
                         <div class="col">
                             <div>
                                 <b>Your input:</b>
-                                <span data-display="dm.textInput"></span>
+                                <span data-display="this.textInput"></span>
                             </div>
                             <div>
                                 <b>You can bind outputs to functions:</b>
-                                <span data-display="dm.getStupidText(dm.textInput)"></span>
+                                <span data-display="this.getStupidText(this.textInput)"></span>
                             </div>
                         </div>
                     </div>
-                    <pre><code class="language-html">&lt;input data-in=&quot;dm.textInput&quot; type=&quot;text&quot;&gt;
-&lt;span data-display=&quot;dm.textInput&quot;&gt;
-&lt;span data-display=&quot;dm.getStupidText(dm.textInput)&quot;&gt;&lt;/span&gt;</code></pre>
+                    <pre><code class="language-html">&lt;input data-in=&quot;this.textInput&quot; type=&quot;text&quot;&gt;
+&lt;span data-display=&quot;this.textInput&quot;&gt;
+&lt;span data-display=&quot;this.getStupidText(this.textInput)&quot;&gt;&lt;/span&gt;</code></pre>
                 </div>
                 <div>
                     <h5>Checkbox</h5>
@@ -130,24 +130,24 @@
                         <div class="col">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="checkInput"
-                                    data-in="dm.checkInput">
+                                    data-in="this.checkInput">
                                 <label class="custom-control-label" for="checkInput">This is a checkbox</label>
                             </div>
                         </div>
                         <div class="col">
                             <div>
                                 <b>Checkbox value is:</b>
-                                <span data-display="dm.checkInput"></span>
+                                <span data-display="this.checkInput"></span>
                             </div>
                             <div>
                                 <b>You can also put js right in the binding:</b>
-                                <span data-display="dm.checkInput ? 'Yes' : 'No'"></span>
+                                <span data-display="this.checkInput ? 'Yes' : 'No'"></span>
                             </div>
                         </div>
                     </div>
-                    <pre><code class="language-html">&lt;input type=&quot;checkbox&quot; data-in=&quot;dm.checkInput&quot;&gt;
-&lt;span data-display=&quot;dm.checkInput&quot;&gt;&lt;/span&gt;
-&lt;span data-display=&quot;dm.checkInput ? 'Yes' : 'No'&quot;&gt;&lt;/span&gt;</code></pre>
+                    <pre><code class="language-html">&lt;input type=&quot;checkbox&quot; data-in=&quot;this.checkInput&quot;&gt;
+&lt;span data-display=&quot;this.checkInput&quot;&gt;&lt;/span&gt;
+&lt;span data-display=&quot;this.checkInput ? 'Yes' : 'No'&quot;&gt;&lt;/span&gt;</code></pre>
                 </div>
                 <div>
                     <h5>Outputting to an Input</h5>
@@ -156,7 +156,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label>Pick one</label>
-                                <select class="custom-select" data-in="dm.select">
+                                <select class="custom-select" data-in="this.select">
                                     <option selected disabled value="">Open this select menu</option>
                                     <option value="Eeny">One</option>
                                     <option value="Meeny">Two</option>
@@ -168,18 +168,18 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="selectOut">You Picked</label>
-                                <input data-out="dm.select" class="form-control" id="selectOut" disabled>
+                                <input data-out="this.select" class="form-control" id="selectOut" disabled>
                             </div>
                         </div>
                     </div>
-                    <pre><code class="language-html">&lt;select data-in=&quot;dm.select&quot;&gt;
+                    <pre><code class="language-html">&lt;select data-in=&quot;this.select&quot;&gt;
     &lt;option selected disabled value=&quot;&quot;&gt;Open this select menu&lt;/option&gt;
     &lt;option value=&quot;Eeny&quot;&gt;One&lt;/option&gt;
     &lt;option value=&quot;Meeny&quot;&gt;Two&lt;/option&gt;
     &lt;option value=&quot;Miny&quot;&gt;Three&lt;/option&gt;
     &lt;option value=&quot;Moe&quot;&gt;Four&lt;/option&gt;
 &lt;/select&gt;
-&lt;input data-out=&quot;dm.select&quot; disabled&gt;</code></pre>
+&lt;input data-out=&quot;this.select&quot; disabled&gt;</code></pre>
                 </div>
                 <div>
                     <h5>Min/Max</h5>
@@ -187,48 +187,48 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="min">Min</label>
-                                <input data-in="dm.min" type="number" class="form-control" id="min" value="5">
+                                <input data-in="this.min" type="number" class="form-control" id="min" value="5">
                             </div>
                             <div class="form-group">
                                 <label for="min">Max</label>
-                                <input data-in="dm.max" type="number" class="form-control" id="max" value="10">
+                                <input data-in="this.max" type="number" class="form-control" id="max" value="10">
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label for="range">Range input</label>
-                                <input data-min="dm.min" data-max="dm.max" data-in="dm.range" type="range"
+                                <input data-min="this.min" data-max="this.max" data-in="this.range" type="range"
                                     class="form-control-range" id="range">
                             </div>
-                            <span data-display="dm.range"></span>
+                            <span data-display="this.range"></span>
                             <div class="form-group">
                                 <label for="rangedNum">Numeral Input</label>
-                                <input data-min="dm.min" data-max="dm.max" type="number" class="form-control"
+                                <input data-min="this.min" data-max="this.max" type="number" class="form-control"
                                     id="rangedNum">
                             </div>
                         </div>
                     </div>
-                    <pre><code class="language-html">&lt;input data-in=&quot;dm.min&quot; type=&quot;number&quot;&gt;
-&lt;input data-in=&quot;dm.max&quot; type=&quot;number&quot;&gt;
-&lt;input data-min=&quot;dm.min&quot; data-max=&quot;dm.max&quot; data-in=&quot;dm.range&quot; type=&quot;range&quot;&gt;
-&lt;span data-display=&quot;dm.range&quot;&gt;&lt;/span&gt;
-&lt;input data-min=&quot;dm.min&quot; data-max=&quot;dm.max&quot; type=&quot;number&quot;&gt;</code></pre>
+                    <pre><code class="language-html">&lt;input data-in=&quot;this.min&quot; type=&quot;number&quot;&gt;
+&lt;input data-in=&quot;this.max&quot; type=&quot;number&quot;&gt;
+&lt;input data-min=&quot;this.min&quot; data-max=&quot;this.max&quot; data-in=&quot;this.range&quot; type=&quot;range&quot;&gt;
+&lt;span data-display=&quot;this.range&quot;&gt;&lt;/span&gt;
+&lt;input data-min=&quot;this.min&quot; data-max=&quot;this.max&quot; type=&quot;number&quot;&gt;</code></pre>
                 </div>
                 <div>
                     <h5>Disable</h5>
                     <div class="row my-2">
                         <div class="col">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="disable" data-in="dm.disable">
+                                <input type="checkbox" class="custom-control-input" id="disable" data-in="this.disable">
                                 <label class="custom-control-label" for="disable">Disable button</label>
                             </div>
                         </div>
                         <div class="col">
-                            <button role="button" class="btn btn-primary" data-disable="dm.disable">Button :)</button>
+                            <button role="button" class="btn btn-primary" data-disable="this.disable">Button :)</button>
                         </div>
                     </div>
-                    <pre><code class="language-html">&lt;input type=&quot;checkbox&quot; data-in=&quot;dm.disable&quot;&gt;
-&lt;button data-disable=&quot;dm.disable&quot;&gt;Button :)&lt;/button&gt;</code></pre>
+                    <pre><code class="language-html">&lt;input type=&quot;checkbox&quot; data-in=&quot;this.disable&quot;&gt;
+&lt;button data-disable=&quot;this.disable&quot;&gt;Button :)&lt;/button&gt;</code></pre>
                 </div>
             </div>
             <div>
@@ -242,15 +242,15 @@
                     </p>
                     <div class="row my-2">
                         <div class="col">
-                            <input type="text" data-in="dm.immediate" data-immediate="true" value="gottagofast"
+                            <input type="text" data-in="this.immediate" data-immediate="true" value="gottagofast"
                                 class="form-control">
                         </div>
                         <div class="col">
-                            <span data-display="dm.getStupidText(dm.immediate)"></span>
+                            <span data-display="this.getStupidText(this.immediate)"></span>
                         </div>
                     </div>
-                    <pre><code class="language-html">&lt;input type=&quot;text&quot; data-in=&quot;dm.immediate&quot; data-immediate&quot;true&quot;&gt;
-&lt;span data-display=&quot;dm.getStupidText(dm.immediate)&quot;&gt;&lt;/span&gt;</code></pre>
+                    <pre><code class="language-html">&lt;input type=&quot;text&quot; data-in=&quot;this.immediate&quot; data-immediate&quot;true&quot;&gt;
+&lt;span data-display=&quot;this.getStupidText(this.immediate)&quot;&gt;&lt;/span&gt;</code></pre>
                 </div>
                 <div>
                     <h5>Manually refreshing</h5>
@@ -261,14 +261,14 @@
                     </p>
                     <div class="row my-2">
                         <div class="col">
-                            <button class="btn btn-primary" onclick="dm.triggerRefresh()">Trigger update</button>
+                            <button class="btn btn-primary" onclick="this.triggerRefresh()">Trigger update</button>
                         </div>
                         <div class="col">
-                            <span data-display="dm.counter"></span>
+                            <span data-display="this.counter"></span>
                         </div>
                     </div>
-                    <pre><code class="language-html">&lt;button onclick=&quot;dm.triggerRefresh()&quot;&gt;Trigger update&lt;/button&gt;
-&lt;span data-display=&quot;dm.counter&quot;&gt;&lt;/span&gt;</code></pre>
+                    <pre><code class="language-html">&lt;button onclick=&quot;this.triggerRefresh()&quot;&gt;Trigger update&lt;/button&gt;
+&lt;span data-display=&quot;this.counter&quot;&gt;&lt;/span&gt;</code></pre>
                 </div>
             </div>
         </div>
