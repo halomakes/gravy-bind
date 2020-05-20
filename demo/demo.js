@@ -1,4 +1,9 @@
 class DemoModel {
+    constructor() {
+        this.binder.registerOutwardBinding('alt', (element, value) => element.alt = value);
+        this.binder.registerOutwardBinding('src', (element, value) => element.src = value);
+    }
+
     binder = new GravyBinder(this, document.getElementById('demoRoot'));
     codeSource = '';
     toggleColor = false;
@@ -12,6 +17,9 @@ class DemoModel {
     disable = false;
     immediate = '';
     counter = 0;
+    alt;
+    width = 140;
+    height = 60;
     triggerRefresh = () => {
         this.counter++;
         this.binder.updateOutwardBindings();
@@ -28,6 +36,7 @@ class DemoModel {
             hljs.initHighlightingOn();
         }
     }
+    getImageUrl = () => `https://via.placeholder.com/${this.width}x${this.height}`;
 }
 
 let dm = new DemoModel();
