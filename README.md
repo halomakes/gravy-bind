@@ -20,6 +20,12 @@ Or limit scanning to just part of the DOM tree
 ```javascript
 const binder = new GravyBinder(myScope, document.getElementById('rootNode'));
 ```
+Start binding stuff!
+```html
+<input data-in="this.firstName">
+<b>You entered:</b>
+<span data-display="this.firstName"></span>
+```
 
 ## What is it?
 Say hello to GravyBind! This utility lets you bind things in your HTML to JavaScript variables.
@@ -38,11 +44,8 @@ See the demo page for usage and examples: [gravybind.halomademeapc.com](https://
 ## Planned Features
 * Loops and templating
 * Radio button support
-* Registering custom binding types
-* More validation functions
-* Adding/removing nodes instead of just hiding them
-* Root node scoping
 * Two-way binding on inputs
 
 ## Changelog
+* **1.2.0** Add support for dynamically registering binding types, add more built-in bindings
 * **1.1.0** Replace `eval` calls with `new Function`, limit JavaScript scope of evaluations

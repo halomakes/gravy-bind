@@ -1,6 +1,6 @@
 {
   "name": "gravy-bind",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Hassle-free one-way binding for legacy and predominantly server-side apps",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

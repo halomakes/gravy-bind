@@ -70,6 +70,105 @@
         <div id="demoScope">
             <h2>Usage</h2>
             <div>
+                <h5>Built-in Bindings</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Data tag</th>
+                            <th>Direction</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>data-in</td>
+                            <td>Inward</td>
+                            <td>Captures value from an input</td>
+                        </tr>
+                        <tr>
+                            <td>data-display</td>
+                            <td>Outward</td>
+                            <td>Outputs content to innerHTML</td>
+                        </tr>
+                        <tr>
+                            <td>data-min</td>
+                            <td>Outward</td>
+                            <td>Binds to min attribute of input</td>
+                        </tr>
+                        <tr>
+                            <td>data-max</td>
+                            <td>Outward</td>
+                            <td>Binds to max attribute of output</td>
+                        </tr>
+                        <tr>
+                            <td>data-disable</td>
+                            <td>Outward</td>
+                            <td>Controls disabled state of element</td>
+                        </tr>
+                        <tr>
+                            <td>data-out</td>
+                            <td>Outward</td>
+                            <td>Sets the value of an input</td>
+                        </tr>
+                        <tr>
+                            <td>data-class/data-class-condition</td>
+                            <td>Outward</td>
+                            <td>Applies the specified class when the condition is true</td>
+                        </tr>
+                        <tr>
+                            <td>data-hide</td>
+                            <td>Outward</td>
+                            <td>Controls hidden state of element</td>
+                        </tr>
+                        <tr>
+                            <td>data-show</td>
+                            <td>Outward</td>
+                            <td>Controls hidden state of element (inverse of data-hide)</td>
+                        </tr>
+                        <tr>
+                            <td>data-min-length</td>
+                            <td>Outward</td>
+                            <td>Controls the minLength of an input</td>
+                        </tr>
+                        <tr>
+                            <td>data-max-length</td>
+                            <td>Outward</td>
+                            <td>Controls the maxLength of an input</td>
+                        </tr>
+                        <tr>
+                            <td>data-required</td>
+                            <td>Outward</td>
+                            <td>Controls the required attribute of an input</td>
+                        </tr>
+                        <tr>
+                            <td>data-placeholder</td>
+                            <td>Outward</td>
+                            <td>Binds to the placeholder of an input</td>
+                        </tr>
+                        <tr>
+                            <td>data-checked</td>
+                            <td>Outward</td>
+                            <td>Binds to the checked attribute of a checkbox</td>
+                        </tr>
+                        <tr>
+                            <td>data-step</td>
+                            <td>Outward</td>
+                            <td>Controls the step of a range or number input</td>
+                        </tr>
+                        <tr>
+                            <td>data-title</td>
+                            <td>Outward</td>
+                            <td>Sets the title attribute of a node</td>
+                        </tr>
+                        <tr>
+                            <td>data-href</td>
+                            <td>Outward</td>
+                            <td>Sets the href of an anchor</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
                 <h5>Demo Class</h5>
                 <p>
                     This is an example of the JavaScript that things in this demo are bound to. It's defined by a class
@@ -270,6 +369,63 @@
                         </div>
                     </div>
                     <pre><code class="language-html">&lt;button onclick=&quot;this.triggerRefresh()&quot;&gt;Trigger update&lt;/button&gt;
+&lt;span data-display=&quot;this.counter&quot;&gt;&lt;/span&gt;</code></pre>
+                </div>
+            </div>
+            <div>
+                <h3>Extending</h3>
+                <div>
+                    <h5>Adding outward bindings</h5>
+                    <p>
+                        Additional bindings can be added by calling the registerOutwardBinding method on a GravyBinder.
+                        Pass in the name of the data attribute to use in kebab-case and an action to perform with the
+                        node and value when bindings are updated.
+                    </p>
+                    <div class="row my-2">
+                        <div class="col">
+                            <div class="form-grou">
+                                <label for="alt">Set Alternate Text</label>
+                                <input type="text" data-in="this.alt" value="set alternate text" class="form-control"
+                                    id="alt">
+                            </div>
+                            <div class="form-grou">
+                                <label for="width">Width</label>
+                                <input type="number" data-in="this.width" value="140" class="form-control" id="width">
+                            </div>
+                            <div class="form-grou">
+                                <label for="height">Height</label>
+                                <input type="number" data-in="this.height" value="60" class="form-control" id="height">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <img src="https://via.placeholder.com/350x150" data-src="this.getImageUrl()"
+                                data-alt="this.alt" data-title="this.alt">
+                        </div>
+                    </div>
+                    <pre><code class="language-js">this.binder.registerOutwardBinding('alt', (element, value) =&gt; element.alt = value);
+this.binder.registerOutwardBinding('src', (element, value) =&gt; element.src = value);
+getImageUrl = () =&gt; `https://via.placeholder.com/${this.width}x${this.height}`;</code></pre>
+                    <pre><code class="language-html">&lt;input type=&quot;text&quot; data-in=&quot;this.alt&quot;&gt;
+&lt;input type=&quot;number&quot; data-in=&quot;this.width&quot; id=&quot;width&quot;&gt;
+&lt;input type=&quot;number&quot; data-in=&quot;this.height&quot; id=&quot;height&quot;&gt;
+&lt;img data-src=&quot;this.getImageUrl()&quot; data-alt=&quot;this.alt&quot; data-title=&quot;this.alt&quot;&gt;</code></pre>
+                </div>
+                <div>
+                    <h5>Manually refreshing</h5>
+                    <p>
+                        You can manually trigger a display refresh by calling updateOutwardBindings on your binder
+                        instance. This is useful if you changed some values via code or fetched some info in
+                        asynchronously.
+                    </p>
+                    <div class="row my-2">
+                        <div class="col">
+                            <button class="btn btn-primary" onclick="dm.triggerRefresh()">Trigger update</button>
+                        </div>
+                        <div class="col">
+                            <span data-display="this.counter"></span>
+                        </div>
+                    </div>
+                    <pre><code class="language-html">&lt;button onclick=&quot;dm.triggerRefresh()&quot;&gt;Trigger update&lt;/button&gt;
 &lt;span data-display=&quot;this.counter&quot;&gt;&lt;/span&gt;</code></pre>
                 </div>
             </div>
