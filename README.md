@@ -12,9 +12,13 @@ Create a binder
 ```javascript
 let binder = new GravyBinder();
 ```
-Or make one scoped to just part of the page
+Or provide a variable scope (default is just window)
 ```javascript
-let binder = new GravyBinder(document.getElementById('myScope'));
+const binder = new GravyBinder({firstName: '', lastName:''});
+```
+Or limit scanning to just part of the DOM tree
+```javascript
+const binder = new GravyBinder(myScope, document.getElementById('rootNode'));
 ```
 
 ## What is it?
@@ -32,9 +36,13 @@ With that out of the way, let's take a look at what this can do!
 See the demo page for usage and examples: [gravybind.halomademeapc.com](https://gravybind.halomademeapc.com/)
 
 ## Planned Features
+* Loops and templating
 * Radio button support
 * Registering custom binding types
 * More validation functions
 * Adding/removing nodes instead of just hiding them
 * Root node scoping
 * Two-way binding on inputs
+
+## Changelog
+* **1.1.0** Replace `eval` calls with `new Function`, limit JavaScript scope of evaluations

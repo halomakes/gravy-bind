@@ -60,9 +60,11 @@
             <p>Add a reference to the script</p>
             <pre><code class="language-html">&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/gravy-bind/dist.browser/index.js&quot;&gt;&lt;/script&gt;</code></pre>
             <p>Create a binder</p>
-            <pre><code class="language-js">let binder = new GravyBinder();</code></pre>
-            <p>Or make one scoped to just part of the page</p>
-            <pre><code class="language-js">let binder = new GravyBinder(document.getElementById('myScope'));</code></pre>
+            <pre><code class="language-js">const binder = new GravyBinder();</code></pre>
+            <p>Or provide a variable scope (default is just window)</p>
+            <pre><code class="language-js">const binder = new GravyBinder({firstName: '', lastName:''});</code></pre>
+            <p>Or limit scanning to just part of the DOM tree</p>
+            <pre><code class="language-js">const binder = new GravyBinder(myScope, document.getElementById('rootNode'));</code></pre>
         </div>
         <hr>
         <div id="demoScope">
@@ -70,8 +72,8 @@
             <div>
                 <h5>Demo Class</h5>
                 <p>
-                    This is an example of the JavaScript that things in this demo are bound to. It's a class but you can
-                    use any global variable you like.
+                    This is an example of the JavaScript that things in this demo are bound to. It's defined by a class
+                    but you can use any object you like.
                 </p>
                 <pre><code data-display="this.codeSource" class="language-js"></code></pre>
             </div>
@@ -271,18 +273,6 @@
 &lt;span data-display=&quot;this.counter&quot;&gt;&lt;/span&gt;</code></pre>
                 </div>
             </div>
-        </div>
-        <hr>
-        <div>
-            <h2>Planned Features</h2>
-            <ul>
-                <li>Radio button support</li>
-                <li>Registering custom binding types</li>
-                <li>More validation functions</li>
-                <li>Adding/removing nodes instead of just hiding them</li>
-                <li>Root node scoping</li>
-                <li>Two-way binding on inputs</li>
-            </ul>
         </div>
     </div>
 
