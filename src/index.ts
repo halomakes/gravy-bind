@@ -75,7 +75,6 @@ class GravyBinder {
 
     public registerOutwardBinding = (dataAttribute: string, bindingAction: (node: any, value: any) => void): void => {
         const onUpdateAction = () => this.loopByQuery(`[data-${dataAttribute}]`, (e) => bindingAction(e, this.getDynamic(e.dataset[this.toCamelCase(dataAttribute)])))
-        console.log(`registering binding for [data-${dataAttribute}]`);
         this.outwardBindingActions[dataAttribute] = onUpdateAction;
     }
 
@@ -86,6 +85,16 @@ class GravyBinder {
         this.registerOutwardBinding('disable', (e, v) => e.disabled = v || false);
         this.registerOutwardBinding('out', (e, v) => e.value = v);
         this.registerOutwardBinding('class-condition', (e, v) => this.applyClassConditionally(e, e.dataset.class, v || false));
+        this.registerOutwardBinding('hide', (e, v) => e.hidden = v);
+        this.registerOutwardBinding('show', (e, v) => e.hidden = !v);
+        this.registerOutwardBinding('min-length', (e, v) => e.minLength = v);
+        this.registerOutwardBinding('max-length', (e, v) => e.maxLength = v);
+        this.registerOutwardBinding('required', (e, v) => e.required = v);
+        this.registerOutwardBinding('placeholder', (e, v) => e.placeholder = v);
+        this.registerOutwardBinding('checked', (e, v) => e.checked = v);
+        this.registerOutwardBinding('step', (e, v) => e.step = v);
+        this.registerOutwardBinding('title', (e, v) => e.title = v);
+        this.registerOutwardBinding('href', (e, v) => e.href = v);
     }
 
     private updateOutwardBinding = (dataAttribute: string) => {
