@@ -8,6 +8,8 @@ class GravyBinder {
         this.initialize();
     }
 
+    private outwardBindingActions: { [key: string]: () => void } = {};
+
     private loopByQuery = (query: string, action: (element: any) => any): void => {
         const elements = this.root.querySelectorAll(query);
 
@@ -25,15 +27,6 @@ class GravyBinder {
 
     private getDynamic = <TValue>(property: string): TValue => Function(`return ${property}`).call(this.scope);
 
-    public updateDisplayBindings = () =>
-        this.loopByQuery('[data-display]', (e) => e.innerHTML = this.getDynamic(e.dataset.display));
-
-    public updateMinBindings = (): void =>
-        this.loopByQuery('[data-min]', (e) => e.min = this.getDynamic(e.dataset.min));
-
-    public updateMaxBindings = (): void =>
-        this.loopByQuery('[data-max]', (e) => e.max = this.getDynamic(e.dataset.max));
-
     public updateInputBindings = (): void =>
         this.loopByQuery('[data-in]', (e) => {
             if (e.type === 'checkbox')
@@ -43,17 +36,6 @@ class GravyBinder {
             else
                 this.setDynamic(e.dataset.in, e.value);
         });
-
-    public updateShadowInputBindings = (): void =>
-        this.loopByQuery('[data-out]', (e) => e.value = this.getDynamic(e.dataset.out));
-
-    public updateClassBindings = (): void =>
-        this.loopByQuery('[data-class]', (e) =>
-            this.applyClassConditionally(e, e.dataset.class, this.getDynamic(e.dataset.classCondition) || false)
-        );
-
-    public updateDisableBindings = (): void =>
-        this.loopByQuery('[data-disable]', (e) => e.disabled = this.getDynamic(e.dataset.disable) || false);
 
     private applyClassConditionally = (element: any, className: string, evaluator: boolean): void => {
         if (evaluator)
@@ -67,14 +49,8 @@ class GravyBinder {
         this.updateOutwardBindings();
     };
 
-    public updateOutwardBindings = (): void => {
-        this.updateShadowInputBindings();
-        this.updateDisplayBindings();
-        this.updateClassBindings();
-        this.updateDisableBindings();
-        this.updateMinBindings();
-        this.updateMaxBindings();
-    };
+    public updateOutwardBindings = (): void => Object.keys(this.outwardBindingActions).forEach(this.updateOutwardBinding);
+
 
     private bindInputEvents = (): void => this.loopByQuery('[data-in]', (e) => {
         e.addEventListener('change', () => this.updateBindings());
@@ -94,5 +70,33 @@ class GravyBinder {
         } else {
             this.initializeListener();
         }
+        this.registerDefaultOutwardBindings();
     }
+
+    public registerOutwardBinding = (dataAttribute: string, bindingAction: (node: any, value: any) => void): void => {
+        const onUpdateAction = () => this.loopByQuery(`[data-${dataAttribute}]`, (e) => bindingAction(e, this.getDynamic(e.dataset[this.toCamelCase(dataAttribute)])))
+        console.log(`registering binding for [data-${dataAttribute}]`);
+        this.outwardBindingActions[dataAttribute] = onUpdateAction;
+    }
+
+    private registerDefaultOutwardBindings = (): void => {
+        this.registerOutwardBinding('display', (e, v) => e.innerHTML = v);
+        this.registerOutwardBinding('min', (e, v) => e.min = v);
+        this.registerOutwardBinding('max', (e, v) => e.max = v);
+        this.registerOutwardBinding('disable', (e, v) => e.disabled = v || false);
+        this.registerOutwardBinding('out', (e, v) => e.value = v);
+        this.registerOutwardBinding('class-condition', (e, v) => this.applyClassConditionally(e, e.dataset.class, v || false));
+    }
+
+    private updateOutwardBinding = (dataAttribute: string) => {
+        const action = this.outwardBindingActions[dataAttribute];
+        if (action)
+            action();
+    }
+
+    private toCamelCase = (kebabCase: string): string => kebabCase
+        .split('-')
+        .map((item, index) => index ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase() : item)
+        .join("")
+
 };
