@@ -1,4 +1,4 @@
-# GravyBind ![Version](https://img.shields.io/npm/v/gravy-bind) ![Downloads](https://img.shields.io/npm/dt/gravy-bind) ![Build Status](https://api.travis-ci.org/halomademeapc/gravy-bind.svg?branch=master&status=started)
+# GravyBind [![Version](https://img.shields.io/npm/v/gravy-bind)](https://www.npmjs.com/package/gravy-bind) [![Downloads](https://img.shields.io/npm/dt/gravy-bind)](https://www.npmjs.com/package/gravy-bind) [![Build Status](https://api.travis-ci.org/halomademeapc/gravy-bind.svg?branch=master)](https://travis-ci.org/github/halomademeapc/gravy-bind)
 Hassle-free one-way binding for predominantly server-side apps
 
 \[ [npm](https://www.npmjs.com/package/gravy-bind) | [GitHub](https://github.com/halomademeapc/gravy-bind) | [Demo](https://gravybind.halomademeapc.com/) \]
