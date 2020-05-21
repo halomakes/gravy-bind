@@ -362,13 +362,13 @@
                     </p>
                     <div class="row my-2">
                         <div class="col">
-                            <button class="btn btn-primary" onclick="this.triggerRefresh()">Trigger update</button>
+                            <button class="btn btn-primary" onclick="dm.triggerRefresh()">Trigger update</button>
                         </div>
                         <div class="col">
                             <span data-display="this.counter"></span>
                         </div>
                     </div>
-                    <pre><code class="language-html">&lt;button onclick=&quot;this.triggerRefresh()&quot;&gt;Trigger update&lt;/button&gt;
+                    <pre><code class="language-html">&lt;button onclick=&quot;dm.triggerRefresh()&quot;&gt;Trigger update&lt;/button&gt;
 &lt;span data-display=&quot;this.counter&quot;&gt;&lt;/span&gt;</code></pre>
                 </div>
             </div>
@@ -409,24 +409,6 @@ getImageUrl = () =&gt; `https://via.placeholder.com/${this.width}x${this.height}
 &lt;input type=&quot;number&quot; data-in=&quot;this.width&quot; id=&quot;width&quot;&gt;
 &lt;input type=&quot;number&quot; data-in=&quot;this.height&quot; id=&quot;height&quot;&gt;
 &lt;img data-src=&quot;this.getImageUrl()&quot; data-alt=&quot;this.alt&quot; data-title=&quot;this.alt&quot;&gt;</code></pre>
-                </div>
-                <div>
-                    <h5>Manually refreshing</h5>
-                    <p>
-                        You can manually trigger a display refresh by calling updateOutwardBindings on your binder
-                        instance. This is useful if you changed some values via code or fetched some info in
-                        asynchronously.
-                    </p>
-                    <div class="row my-2">
-                        <div class="col">
-                            <button class="btn btn-primary" onclick="dm.triggerRefresh()">Trigger update</button>
-                        </div>
-                        <div class="col">
-                            <span data-display="this.counter"></span>
-                        </div>
-                    </div>
-                    <pre><code class="language-html">&lt;button onclick=&quot;dm.triggerRefresh()&quot;&gt;Trigger update&lt;/button&gt;
-&lt;span data-display=&quot;this.counter&quot;&gt;&lt;/span&gt;</code></pre>
                 </div>
             </div>
         </div>
