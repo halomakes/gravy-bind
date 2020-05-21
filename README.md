@@ -1,4 +1,4 @@
-# GravyBind
+# GravyBind ![Build Status](https://api.travis-ci.org/halomademeapc/gravy-bind.svg?branch=master&status=started)
 Hassle-free one-way binding for predominantly server-side apps
 
 \[ [npm](https://www.npmjs.com/package/gravy-bind) | [GitHub](https://github.com/halomademeapc/gravy-bind) | [Demo](https://gravybind.halomademeapc.com/) \]
