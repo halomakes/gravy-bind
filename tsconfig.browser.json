@@ -13,7 +13,7 @@
         "strict": false
     },
     "include": [
-        "./src"
+        "./src/browser.ts"
     ],
     "exclude": [
         "node_modules",
