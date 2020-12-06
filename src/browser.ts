@@ -31,6 +31,9 @@ class GravyBinder {
         this.loopByQuery('[data-in]', (e) => {
             if (e.type === 'checkbox')
                 this.setDynamic(e.dataset.in, e.checked);
+            else if (e.type == 'radio') {
+                if (e.checked) this.setDynamic(e.dataset.in, e.value);
+            }
             else if (e.type === 'number')
                 this.setDynamic(e.dataset.in, Number(e.value));
             else
