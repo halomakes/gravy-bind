@@ -4,7 +4,7 @@ class DemoModel {
         this.binder.registerOutwardBinding('src', (element, value) => element.src = value);
     }
 
-    binder = new GravyBinder(this, document.getElementById('demoRoot'));
+    binder = new GravyBinder(this, document.getElementById('demoRoot'), {precomputeBindings: true});
     codeSource = '';
     toggleColor = false;
     textInput = '';

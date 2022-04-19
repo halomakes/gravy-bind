@@ -292,7 +292,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="min">Max</label>
-                                <input data-in="this.max" type="number" class="form-control" id="max" value="10">
+                                <input data-in="this.max" type="number" class="form-control" id="max" value="100">
                             </div>
                         </div>
                         <div class="col">
@@ -302,6 +302,7 @@
                                     class="form-control-range" id="range">
                             </div>
                             <span data-display="this.range"></span>
+                            <span data-show="this.range == 69">nice</span>
                             <div class="form-group">
                                 <label for="rangedNum">Numeral Input</label>
                                 <input data-min="this.min" data-max="this.max" type="number" class="form-control"
@@ -414,7 +415,7 @@ getImageUrl = () =&gt; `https://via.placeholder.com/${this.width}x${this.height}
         </div>
     </div>
 
-    <script type="text/javascript" src="https://unpkg.com/gravy-bind/dist.browser/index.js"></script>
+    <script type="text/javascript" src="../dist.browser/index.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
     <script src="demo.js" type="text/javascript"></script>
 </body>

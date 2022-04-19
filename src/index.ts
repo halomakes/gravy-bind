@@ -1,14 +1,20 @@
-class GravyBinder {
-    private root: Element | Document;
-    private scope: any;
+export type GravyBinderConfig = { precomputeBindings?: boolean };
+type Action = (node: any, value: any) => void;
+type ActionCollection = { [key: string]: Action };
+type OutwardBinding = { element?: HTMLElement, action: () => void };
 
-    constructor(scope?: any, root?: HTMLElement) {
+export class GravyBinder {
+    protected root: Element | Document;
+    protected scope: any;
+
+    constructor(scope?: any, root?: HTMLElement, protected config?: GravyBinderConfig) {
         this.root = root || document;
         this.scope = scope || window;
         this.initialize();
     }
 
-    private outwardBindingActions: { [key: string]: () => void } = {};
+    private outwardBindingActions: ActionCollection = {};
+    private appliedBindings: OutwardBinding[] = [];
 
     private loopByQuery = (query: string, action: (element: any) => any): void => {
         const elements = this.root.querySelectorAll(query);
@@ -20,17 +26,22 @@ class GravyBinder {
         }
     };
 
-    private setDynamic = <TValue>(property: string, value: TValue): void => {
+    protected setDynamic = <TValue>(property: string, value: TValue): void => {
         this.scope.$binderWorkingValue = value;
         return Function(`${property} = this.$binderWorkingValue`).call(this.scope);
     }
 
-    private getDynamic = <TValue>(property: string): TValue => Function(`return ${property}`).call(this.scope);
+    protected getDynamic = <TValue>(property: string): TValue => this.compileGetter(property).call(this.scope);
+
+    protected compileGetter = (property: string): Function => Function(`return ${property}`);
 
     public updateInputBindings = (): void =>
         this.loopByQuery('[data-in]', (e) => {
             if (e.type === 'checkbox')
                 this.setDynamic(e.dataset.in, e.checked);
+            else if (e.type == 'radio') {
+                if (e.checked) this.setDynamic(e.dataset.in, e.value);
+            }
             else if (e.type === 'number')
                 this.setDynamic(e.dataset.in, Number(e.value));
             else
@@ -49,7 +60,12 @@ class GravyBinder {
         this.updateOutwardBindings();
     };
 
-    public updateOutwardBindings = (): void => Object.keys(this.outwardBindingActions).forEach(this.updateOutwardBinding);
+    public updateOutwardBindings = (): void => {
+        if (!this.config?.precomputeBindings) {
+            this.scanBindings();
+        }
+        this.appliedBindings.forEach(b => b.action());
+    }
 
 
     private bindInputEvents = (): void => this.loopByQuery('[data-in]', (e) => {
@@ -62,7 +78,24 @@ class GravyBinder {
     private initializeListener = (): void => {
         this.bindInputEvents();
         this.updateBindings();
+        if (this.config?.precomputeBindings) {
+            this.scanBindings();
+        }
     };
+
+    public scanBindings = (): void => {
+        this.appliedBindings = [];
+        for (let bindingName of Object.keys(this.outwardBindingActions)) {
+            const action = this.outwardBindingActions[bindingName];
+            this.loopByQuery(`[data-${bindingName}]`, (element) => {
+                const getter = this.compileGetter(element.dataset[this.toCamelCase(bindingName)]);
+                this.appliedBindings.push({
+                    element: element,
+                    action: () => action(element, getter.call(this.scope))
+                });
+            });
+        }
+    }
 
     private initialize = (): void => {
         if (document.readyState === 'loading') {
@@ -74,33 +107,32 @@ class GravyBinder {
     }
 
     public registerOutwardBinding = (dataAttribute: string, bindingAction: (node: any, value: any) => void): void => {
-        const onUpdateAction = () => this.loopByQuery(`[data-${dataAttribute}]`, (e) => bindingAction(e, this.getDynamic(e.dataset[this.toCamelCase(dataAttribute)])))
-        this.outwardBindingActions[dataAttribute] = onUpdateAction;
+        this.outwardBindingActions[dataAttribute] = bindingAction;
     }
 
     private registerDefaultOutwardBindings = (): void => {
-        this.registerOutwardBinding('display', (e, v) => e.innerHTML = v);
-        this.registerOutwardBinding('min', (e, v) => e.min = v);
-        this.registerOutwardBinding('max', (e, v) => e.max = v);
-        this.registerOutwardBinding('disable', (e, v) => e.disabled = v || false);
-        this.registerOutwardBinding('out', (e, v) => e.value = v);
-        this.registerOutwardBinding('class-condition', (e, v) => this.applyClassConditionally(e, e.dataset.class, v || false));
-        this.registerOutwardBinding('hide', (e, v) => e.hidden = v);
-        this.registerOutwardBinding('show', (e, v) => e.hidden = !v);
-        this.registerOutwardBinding('min-length', (e, v) => e.minLength = v);
-        this.registerOutwardBinding('max-length', (e, v) => e.maxLength = v);
-        this.registerOutwardBinding('required', (e, v) => e.required = v);
-        this.registerOutwardBinding('placeholder', (e, v) => e.placeholder = v);
-        this.registerOutwardBinding('checked', (e, v) => e.checked = v);
-        this.registerOutwardBinding('step', (e, v) => e.step = v);
-        this.registerOutwardBinding('title', (e, v) => e.title = v);
-        this.registerOutwardBinding('href', (e, v) => e.href = v);
-    }
-
-    private updateOutwardBinding = (dataAttribute: string) => {
-        const action = this.outwardBindingActions[dataAttribute];
-        if (action)
-            action();
+        this.registerOutwardBinding('display', (e: HTMLElement, v) => e.innerHTML = v);
+        this.registerOutwardBinding('min', (e: HTMLInputElement, v) => e.min = v);
+        this.registerOutwardBinding('max', (e: HTMLInputElement, v) => e.max = v);
+        this.registerOutwardBinding('disable', (e: HTMLInputElement, v) => e.disabled = v || false);
+        this.registerOutwardBinding('out', (e: HTMLInputElement, v) => e.value = v);
+        this.registerOutwardBinding('class-condition', (e: HTMLElement, v) => this.applyClassConditionally(e, e.dataset.class as string, v || false));
+        this.registerOutwardBinding('hide', (e: HTMLElement, v) => {
+            e.hidden = v;
+            e.setAttribute('aria-hidden', (!!v).toString());
+        });
+        this.registerOutwardBinding('show', (e: HTMLElement, v) => {
+            e.hidden = !v;
+            e.setAttribute('aria-hidden', (!!!v).toString());
+        });
+        this.registerOutwardBinding('min-length', (e: HTMLInputElement, v) => e.minLength = v);
+        this.registerOutwardBinding('max-length', (e: HTMLInputElement, v) => e.maxLength = v);
+        this.registerOutwardBinding('required', (e: HTMLInputElement, v) => e.required = v);
+        this.registerOutwardBinding('placeholder', (e: HTMLInputElement, v) => e.placeholder = v);
+        this.registerOutwardBinding('checked', (e: HTMLInputElement, v) => e.checked = v);
+        this.registerOutwardBinding('step', (e: HTMLInputElement, v) => e.step = v);
+        this.registerOutwardBinding('title', (e: HTMLElement, v) => e.title = v);
+        this.registerOutwardBinding('href', (e: HTMLAnchorElement, v) => e.href = v);
     }
 
     private toCamelCase = (kebabCase: string): string => kebabCase
