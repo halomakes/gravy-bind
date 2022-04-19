@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "build": "tsc && webpack --mode production",
     "lint": "tslint -p tsconfig.json"
   },
   "repository": {
@@ -19,9 +19,17 @@
   "author": "halomademeapc",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/node": "^17.0.25",
+    "babel-loader": "^8.2.4",
+    "ts-node": "^10.7.0",
     "tslint": "^6.1.2",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.9.2"
+    "typescript": "^3.9.2",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   },
   "files": [
     "dist/**/*",

@@ -76,13 +76,13 @@ export class GravyBinder {
         this.bindInputEvents();
         this.updateBindings();
         if (this.config?.precomputeBindings) {
-
+            this.scanBindings();
         }
     };
 
     public scanBindings = (): void => {
         this.appliedBindings = [];
-        for (let bindingName in Object.keys(this.outwardBindingActions)) {
+        for (let bindingName of Object.keys(this.outwardBindingActions)) {
             const action = this.outwardBindingActions[bindingName];
             this.loopByQuery(`[data-${bindingName}]`, (element) => {
                 const getter = this.compileGetter(element.dataset[this.toCamelCase(bindingName)]);
