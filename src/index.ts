@@ -108,22 +108,28 @@ export class GravyBinder {
     }
 
     private registerDefaultOutwardBindings = (): void => {
-        this.registerOutwardBinding('display', (e, v) => e.innerHTML = v);
-        this.registerOutwardBinding('min', (e, v) => e.min = v);
-        this.registerOutwardBinding('max', (e, v) => e.max = v);
-        this.registerOutwardBinding('disable', (e, v) => e.disabled = v || false);
-        this.registerOutwardBinding('out', (e, v) => e.value = v);
-        this.registerOutwardBinding('class-condition', (e, v) => this.applyClassConditionally(e, e.dataset.class, v || false));
-        this.registerOutwardBinding('hide', (e, v) => e.hidden = v);
-        this.registerOutwardBinding('show', (e, v) => e.hidden = !v);
-        this.registerOutwardBinding('min-length', (e, v) => e.minLength = v);
-        this.registerOutwardBinding('max-length', (e, v) => e.maxLength = v);
-        this.registerOutwardBinding('required', (e, v) => e.required = v);
-        this.registerOutwardBinding('placeholder', (e, v) => e.placeholder = v);
-        this.registerOutwardBinding('checked', (e, v) => e.checked = v);
-        this.registerOutwardBinding('step', (e, v) => e.step = v);
-        this.registerOutwardBinding('title', (e, v) => e.title = v);
-        this.registerOutwardBinding('href', (e, v) => e.href = v);
+        this.registerOutwardBinding('display', (e: HTMLElement, v) => e.innerHTML = v);
+        this.registerOutwardBinding('min', (e: HTMLInputElement, v) => e.min = v);
+        this.registerOutwardBinding('max', (e: HTMLInputElement, v) => e.max = v);
+        this.registerOutwardBinding('disable', (e: HTMLInputElement, v) => e.disabled = v || false);
+        this.registerOutwardBinding('out', (e: HTMLInputElement, v) => e.value = v);
+        this.registerOutwardBinding('class-condition', (e: HTMLElement, v) => this.applyClassConditionally(e, e.dataset.class as string, v || false));
+        this.registerOutwardBinding('hide', (e: HTMLElement, v) => {
+            e.hidden = v;
+            e.setAttribute('aria-hidden', (!!v).toString());
+        });
+        this.registerOutwardBinding('show', (e: HTMLElement, v) => {
+            e.hidden = !v;
+            e.setAttribute('aria-hidden', (!!!v).toString());
+        });
+        this.registerOutwardBinding('min-length', (e: HTMLInputElement, v) => e.minLength = v);
+        this.registerOutwardBinding('max-length', (e: HTMLInputElement, v) => e.maxLength = v);
+        this.registerOutwardBinding('required', (e: HTMLInputElement, v) => e.required = v);
+        this.registerOutwardBinding('placeholder', (e: HTMLInputElement, v) => e.placeholder = v);
+        this.registerOutwardBinding('checked', (e: HTMLInputElement, v) => e.checked = v);
+        this.registerOutwardBinding('step', (e: HTMLInputElement, v) => e.step = v);
+        this.registerOutwardBinding('title', (e: HTMLElement, v) => e.title = v);
+        this.registerOutwardBinding('href', (e: HTMLAnchorElement, v) => e.href = v);
     }
 
     private toCamelCase = (kebabCase: string): string => kebabCase
