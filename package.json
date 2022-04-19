@@ -6,14 +6,16 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && tsc -p tsconfig.browser.json",
+    "build": "tsc",
     "lint": "tslint -p tsconfig.json"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/halomademeapc/gravy-bind.git"
   },
-  "keywords": ["binding"],
+  "keywords": [
+    "binding"
+  ],
   "author": "halomademeapc",
   "license": "ISC",
   "devDependencies": {
